@@ -1,12 +1,11 @@
 package com.example.sd_assignment2.presentation;
 
-import com.example.sd_assignment2.business.DTOs.LogInDTO;
-import com.example.sd_assignment2.business.DTOs.RegisterDTO;
-import com.example.sd_assignment2.business.DTOs.ResponseDTO;
+import com.example.sd_assignment2.business.DTOs.*;
 import com.example.sd_assignment2.business.model.Admin;
 import com.example.sd_assignment2.business.model.Customer;
 import com.example.sd_assignment2.business.model.User;
 import com.example.sd_assignment2.business.service.UserService;
+import net.bytebuddy.pool.TypePool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,13 +92,22 @@ public class UserController {
             User user = userService.logIn(new User(logInDTO.getUsername(), logInDTO.getPassword()));
             currentUser= user;
             Customer customer = customerController.logInCustomer(user);
+            System.out.println(customer);
             if(customer==null){
                 Admin admin = adminController.logInAdmin(user);
-                if(admin!=null)
-                    System.out.println(admin.getEmail());
+                if(admin!=null){
+                    System.out.println("Admin dto");
+                    return ResponseEntity.status(HttpStatus.OK)
+                            .body(new AdminDTO(admin.getUser().getId(),admin.getId()));
+                }
+
             }
-            else
-                System.out.println(customer.getPhone());
+            else{
+                System.out.println("Customer dto");
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(new CustomerDTO(customer.getUser().getId(),customer.getId()));
+            }
+
 
         }
         catch (Exception e){
@@ -107,7 +115,7 @@ public class UserController {
                     .body(new ResponseDTO(e.getMessage()));
         }
 
-
+        System.out.println("Response dto");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDTO("logged in"));
     }

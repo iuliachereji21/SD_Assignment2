@@ -7,6 +7,8 @@ import com.example.sd_assignment2.persistance.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class CustomerService {
     @Autowired
@@ -16,6 +18,6 @@ public class CustomerService {
     }
 
     public Customer logInCustomer(User user){
-        return customerRepository.findByUser(user);
+        return customerRepository.findByUserId(user.getId());
     }
 }
