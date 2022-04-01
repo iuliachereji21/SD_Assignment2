@@ -1,6 +1,7 @@
 package com.example.sd_assignment2.business.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="admin")
@@ -15,6 +16,9 @@ public class Admin {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
+
+    @OneToMany(mappedBy = "admin")
+    private List<Restaurant> restaurants;
 
     public User getUser() {
         return user;

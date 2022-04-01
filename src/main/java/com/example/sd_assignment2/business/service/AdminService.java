@@ -15,4 +15,8 @@ public class AdminService {
     public Admin logInAdmin(User user){
         return adminRepository.findByUser(user);
     }
+
+    public Admin findById(long id){
+        return adminRepository.findById(id);
+    }
 }

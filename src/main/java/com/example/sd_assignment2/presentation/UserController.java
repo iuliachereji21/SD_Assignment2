@@ -58,7 +58,11 @@ public class UserController {
 
         try{
             User newUser = addUser(registerDTO.getUsername(), registerDTO.getPassword());
-            customerController.addCustomer(registerDTO.getPhone(),newUser);
+            Customer newCustomer = customerController.addCustomer(registerDTO.getPhone(),newUser);
+
+            if(newUser!=null && newCustomer!=null)
+                return ResponseEntity.status(HttpStatus.OK)
+                    .body(new CustomerDTO(newUser.getId(),newCustomer.getId()));
 
         }
         catch (Exception e){
