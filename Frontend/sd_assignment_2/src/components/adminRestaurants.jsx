@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import { useParams} from 'react-router-dom';
 import AddRestaurantDialog from './addRestaurantDialog';
 import axios from 'axios'
+import AdminRestaurantsTable from './adminRestaurantsTable';
 
 function AdminRestaurants() {
     let {adminId} = useParams();
@@ -69,6 +70,7 @@ function AdminRestaurants() {
     //console.log("the data"+data);
 
     useEffect(()=>{
+        console.log("use Effect");
         axios.get(`http://localhost:8080/sd_assignment2/admin/${adminId}/restaurants`)
             .then(res =>{
                 console.log(res);
@@ -93,9 +95,40 @@ function AdminRestaurants() {
             <AddRestaurantDialog 
                 adminId = {adminId}
                 isvisible = {isAddRestaurantDialogOpen} 
-                onCancel = {()=>{setIsAddRestaurantDialogOpen(false)}}>
+                onSave = {(obj)=>{
+                    console.log(obj);
+                    data.push(obj);
+                    setIsAddRestaurantDialogOpen(false)
+                    console.log("on Save");
+                }}
+                onCancel = {()=>{
+                    setIsAddRestaurantDialogOpen(false);
+                    }}>
             </AddRestaurantDialog>
-            <label>hehe3</label>
+            {/* <AdminRestaurantsTable restaurants={data}>
+
+            </AdminRestaurantsTable> */}
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Available delivery zones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.map((restaurant)=>(
+                        <tr>
+                            <td>{restaurant.id}</td>
+                            <td>{restaurant.name}</td>
+                            <td>{restaurant.location}</td>
+                            <td>{restaurant.available_delivery_zones}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
       );
 }

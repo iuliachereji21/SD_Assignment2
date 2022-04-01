@@ -1,6 +1,7 @@
 package com.example.sd_assignment2.business.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="restaurant")
@@ -21,6 +22,9 @@ public class Restaurant {
     @ManyToOne
     @JoinColumn(name="admin_id")
     private Admin admin;
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<Food> foods;
 
     public Restaurant(String name, String location, String available_delivery_zones, Admin admin) {
         this.name = name;

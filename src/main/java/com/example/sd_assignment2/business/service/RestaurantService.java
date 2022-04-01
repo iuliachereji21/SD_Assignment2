@@ -1,5 +1,6 @@
 package com.example.sd_assignment2.business.service;
 
+import com.example.sd_assignment2.business.model.Admin;
 import com.example.sd_assignment2.business.model.Restaurant;
 import com.example.sd_assignment2.persistance.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,9 @@ public class RestaurantService {
 
     public ArrayList<Restaurant> getRestaurantsByAdminId(Long id){
         return restaurantRepository.getAllByAdmin_Id(id);
+    }
+
+    public Restaurant findById(long id){
+        return restaurantRepository.findById(id);
     }
 }

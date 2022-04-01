@@ -14,11 +14,12 @@ function AddRestaurantDialog(props) {
         axios.post("http://localhost:8080/sd_assignment2/admin",{name: name.value, location: location.value, available_delivery_zones: av_del_zones.value, admin_id: props.adminId})
         .then(response =>{
             console.log(response);
+            props.onSave({id:response.data.id, name: response.data.name, location: response.data.location, available_delivery_zones: response.data.available_delivery_zones});
         })
         .catch(({ response }) => { 
             setMessage(response.data.message);
         })
-        props.onCancel();
+        
     };
 
     let dialog = (
