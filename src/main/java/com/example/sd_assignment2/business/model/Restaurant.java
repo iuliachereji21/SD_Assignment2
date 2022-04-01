@@ -29,6 +29,10 @@ public class Restaurant {
         this.admin = admin;
     }
 
+    public Restaurant() {
+        super();
+    }
+
     public long getId() {
         return id;
     }

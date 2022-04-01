@@ -5,6 +5,8 @@ import com.example.sd_assignment2.persistance.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class RestaurantService {
 
@@ -13,5 +15,9 @@ public class RestaurantService {
 
     public void addRestaurant(Restaurant restaurant){
         restaurantRepository.save(restaurant);
+    }
+
+    public ArrayList<Restaurant> getRestaurantsByAdminId(Long id){
+        return restaurantRepository.getAllByAdmin_Id(id);
     }
 }

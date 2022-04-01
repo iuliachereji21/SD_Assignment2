@@ -10,6 +10,10 @@ import Register from './components/register';
 import ReactDOM from 'react-dom/client'
 import CustomerPage from './components/customerPage';
 import AdminPage from './components/adminPage';
+import AdminRestaurants from './components/adminRestaurants';
+import AdminOrders from './components/adminOrders';
+import CustomerRestaurants from './components/customerRestaurants';
+import CustomerOrders from './components/customerOrders';
 
 // function App() {
 //   return (
@@ -30,8 +34,14 @@ class App extends Component {
           <Routes>
             <Route path='/login' element={<LogIn/>}></Route> 
             <Route path='/register' element={<Register />}></Route>
-            <Route path='/customer/:customerId' element={<CustomerPage/>}></Route> 
-            <Route path='/admin/:adminId' element={<AdminPage/>}></Route> 
+            <Route path='/customer/:customerId' element={<CustomerPage/>}>
+              <Route path='restaurants' element={<CustomerRestaurants/>}></Route> 
+              <Route path='orders' element={<CustomerOrders/>}></Route> 
+            </Route> 
+            <Route path='/admin/:adminId' exact element={<AdminPage/>}>
+              <Route path='restaurants' element={<AdminRestaurants/>}></Route> 
+              <Route path='orders' element={<AdminOrders/>}></Route> 
+            </Route> 
             <Route path='/' element={<Home />}></Route>
           </Routes>
         </div>

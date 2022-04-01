@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @RestController
@@ -25,13 +26,18 @@ public class RestaurantController {
     @Autowired
     private AdminService adminService;
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity getUserById(@PathVariable String id){
-//        System.out.println("user for id: "+id);
-//        User newUser = new User("iulia","1234");
-//
-//        return newUser;
-//    }
+    @GetMapping("/admin/{id}/restaurants")
+    public ResponseEntity getRestaurantsByAdminId(@PathVariable Long id){
+
+        ArrayList<Restaurant> restaurantsList = restaurantService.getRestaurantsByAdminId(id);
+        ArrayList<RestaurantDTOWithId> restaurants = new ArrayList<>();
+        for(int i=0;i<restaurantsList.size();i++){
+            restaurants.add(new RestaurantDTOWithId(restaurantsList.get(i)));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(restaurants);
+    }
 
     @PostMapping( "/admin")
     public ResponseEntity addRestaurant(@RequestBody RestaurantDTO restaurantDTO){
