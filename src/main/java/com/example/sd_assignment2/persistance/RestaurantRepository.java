@@ -10,5 +10,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant,Long> {
 
     ArrayList<Restaurant> getAllByAdmin_Id(Long id);
 
+    ArrayList<Restaurant> findAll();
+
     Restaurant findById(long id);
 }

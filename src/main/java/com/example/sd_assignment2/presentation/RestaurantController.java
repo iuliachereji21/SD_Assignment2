@@ -39,6 +39,19 @@ public class RestaurantController {
                 .body(restaurants);
     }
 
+    @GetMapping("/customer/{id}/restaurants")
+    public ResponseEntity getAllRestaurants(){
+
+        ArrayList<Restaurant> restaurantsList = restaurantService.getAllRestaurants();
+        ArrayList<RestaurantDTOWithId> restaurants = new ArrayList<>();
+        for(int i=0;i<restaurantsList.size();i++){
+            restaurants.add(new RestaurantDTOWithId(restaurantsList.get(i)));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(restaurants);
+    }
+
     @PostMapping( "/admin")
     public ResponseEntity addRestaurant(@RequestBody RestaurantDTO restaurantDTO){
         if(restaurantDTO.getName()==null || restaurantDTO.getName().equals(""))

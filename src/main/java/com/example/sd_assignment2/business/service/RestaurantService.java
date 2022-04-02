@@ -25,4 +25,8 @@ public class RestaurantService {
     public Restaurant findById(long id){
         return restaurantRepository.findById(id);
     }
+
+    public ArrayList<Restaurant> getAllRestaurants(){
+        return restaurantRepository.findAll();
+    }
 }

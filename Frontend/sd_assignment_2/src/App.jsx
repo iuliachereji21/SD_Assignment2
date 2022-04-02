@@ -14,16 +14,9 @@ import AdminRestaurants from './components/adminRestaurants';
 import AdminOrders from './components/adminOrders';
 import CustomerRestaurants from './components/customerRestaurants';
 import CustomerOrders from './components/customerOrders';
+import AdminRestaurantPage from './components/adminRestaurantPage';
+import CustomerRestaurantPage from './components/customerRestaurantPage';
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <h1>Here</h1>
-//     </div>
-//   );
-// }
-
-//export default App;
 
 class App extends Component {
   state = {  } 
@@ -35,10 +28,12 @@ class App extends Component {
             <Route path='/login' element={<LogIn/>}></Route> 
             <Route path='/register' element={<Register />}></Route>
             <Route path='/customer/:customerId' element={<CustomerPage/>}>
+              <Route path='restaurants/:restaurantId' element={<CustomerRestaurantPage/>}></Route> 
               <Route path='restaurants' element={<CustomerRestaurants/>}></Route> 
               <Route path='orders' element={<CustomerOrders/>}></Route> 
             </Route> 
             <Route path='/admin/:adminId' exact element={<AdminPage/>}>
+              <Route path='restaurants/:restaurantId' element={<AdminRestaurantPage/>}></Route> 
               <Route path='restaurants' element={<AdminRestaurants/>}></Route> 
               <Route path='orders' element={<AdminOrders/>}></Route> 
             </Route> 
