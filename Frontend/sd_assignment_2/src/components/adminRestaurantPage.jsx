@@ -10,6 +10,7 @@ function AdminRestaurantPage() {
     adminId= adminId.slice(1);
 
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const [isAddFoodDialogOpen, setIsAddFoodDialogOpen]= useState(false);
 
     useEffect(()=>{
@@ -17,15 +18,38 @@ function AdminRestaurantPage() {
             .then(res =>{
                 console.log(res);
                 setData(res.data);
+                setFilteredData(res.data);
             })
             .catch(err =>{
                 console.log(err);
             })
     },[])
 
+    
+    function filterData(){
+        var e = document.getElementById("selectInput");
+        //var as = document.forms[0].ddlViewBy.value;
+        var category = e.options[e.selectedIndex].value;
+        if(category=="None"){
+            setFilteredData(data);
+        }
+        else setFilteredData(data.filter(obj => obj.category == category));
+        console.log(category);
+    }
+
     return ( 
         <div>
             Admin restaurant page {restaurantId}
+            <div className="input-container">
+                <label>Category </label>
+                <select name="category" onChange={filterData} id ="selectInput">
+                    <option value="None"></option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Dessert">Dessert</option>
+                </select>    
+            </div>
             <button onClick={()=>{setIsAddFoodDialogOpen(true)}}>Add</button>
             <AddFoodDialog 
                 restaurantId = {restaurantId}
@@ -34,6 +58,7 @@ function AdminRestaurantPage() {
                 onSave = {(obj)=>{
                     console.log(obj);
                     data.push(obj);
+                    filteredData.push(obj);
                     setIsAddFoodDialogOpen(false)
                     console.log("on Save");
                 }}
@@ -52,7 +77,7 @@ function AdminRestaurantPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((food)=>(
+                    {filteredData.map((food)=>(
                         <tr>
                             <td>{food.id}</td>
                             <td>{food.name}</td>
