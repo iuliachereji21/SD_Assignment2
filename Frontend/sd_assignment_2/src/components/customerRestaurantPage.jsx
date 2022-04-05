@@ -9,6 +9,8 @@ function CustomerRestaurantPage() {
     customerId= customerId.slice(1);
 
     const [data, setData] = useState([]);
+    const [cart, setCart] = useState([]);
+    const [cartTotalPrice, setCartTotalPrice] = useState(0);
 
     useEffect(()=>{
         axios.get(`http://localhost:8080/sd_assignment2/admin/${customerId}/restaurants/${restaurantId}`)
@@ -20,6 +22,17 @@ function CustomerRestaurantPage() {
                 console.log(err);
             })
     },[])
+
+    const addToCart = (foodObject)=>{
+        var cart2 = [...cart];
+        cart2.push(foodObject);
+        setCart(cart2);
+        setCartTotalPrice(cartTotalPrice+foodObject.price)
+    };
+
+    const placeOrder = () =>{
+
+    };
 
     return ( 
         <div>
@@ -42,10 +55,37 @@ function CustomerRestaurantPage() {
                             <td>{food.description}</td>
                             <td>{food.price}</td>
                             <td>{food.category}</td>
+                            <td><button onClick={()=>addToCart(food)}>Add to cart</button></td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <table>
+                <thead>
+                    <h3>cart</h3>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {cart.map((food)=>(
+                        <tr>
+                            <td>{food.id}</td>
+                            <td>{food.name}</td>
+                            <td>{food.description}</td>
+                            <td>{food.price}</td>
+                            <td>{food.category}</td>
+                        </tr>
+                    ))}
+                </tbody>
+                <h3>Total price: {cartTotalPrice}</h3>
+                <button onClick={()=>placeOrder()}>Place Order</button>
+            </table>
+
         </div>
      );
 }
